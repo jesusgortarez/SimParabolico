@@ -44,101 +44,103 @@ const TiroParabolicoSimulador = () => {
 		numPasosMaximo: 1000,
 	});
 
-	function simularProyectil() {
-		const metodos = ['rungeKutta', 'euler', 'verlet'];
-		const posicionInicial = {
-			rungeKutta: { ...datosFisicos.posicionInicial },
-			euler: { ...datosFisicos.posicionInicial },
-			verlet: { ...datosFisicos.posicionInicial },
-		};
-		const velocidadInicial = {
-			rungeKutta: { ...datosFisicos.velocidadInicial },
-			euler: { ...datosFisicos.velocidadInicial },
-			verlet: { ...datosFisicos.velocidadInicial },
-		};
-		const posicionesX = {
-			rungeKutta: [0],
-			euler: [0],
-			verlet: [0],
-		};
-		const posicionesY = {
-			rungeKutta: [0],
-			euler: [0],
-			verlet: [0],
-		};
-		const velocidadesX = {
-			rungeKutta: [0],
-			euler: [0],
-			verlet: [0],
-		};
-		const velocidadesY = {
-			rungeKutta: [0],
-			euler: [0],
-			verlet: [0],
-		};
-		const flags = {
-			rungeKutta: true,
-			euler: true,
-			verlet: true,
-		};
-		const segundos = [];
+	async function simularProyectil() {
+		return new Promise((resolve) => {
+			const metodos = ['rungeKutta', 'euler', 'verlet'];
+			const posicionInicial = {
+				rungeKutta: { ...datosFisicos.posicionInicial },
+				euler: { ...datosFisicos.posicionInicial },
+				verlet: { ...datosFisicos.posicionInicial },
+			};
+			const velocidadInicial = {
+				rungeKutta: { ...datosFisicos.velocidadInicial },
+				euler: { ...datosFisicos.velocidadInicial },
+				verlet: { ...datosFisicos.velocidadInicial },
+			};
+			const posicionesX = {
+				rungeKutta: [0],
+				euler: [0],
+				verlet: [0],
+			};
+			const posicionesY = {
+				rungeKutta: [0],
+				euler: [0],
+				verlet: [0],
+			};
+			const velocidadesX = {
+				rungeKutta: [0],
+				euler: [0],
+				verlet: [0],
+			};
+			const velocidadesY = {
+				rungeKutta: [0],
+				euler: [0],
+				verlet: [0],
+			};
+			const flags = {
+				rungeKutta: true,
+				euler: true,
+				verlet: true,
+			};
+			const segundos = [];
 
-		for (let i = 0; i < datosFisicos.numPasosMaximo; i++) {
-			metodos.forEach((metodo) => {
-				if (flags[metodo]) {
-					const posicion = posicionInicial[metodo];
-					const velocidad = velocidadInicial[metodo];
-					const velocidadesXMetodo = velocidadesX[metodo];
-					const velocidadesYMetodo = velocidadesY[metodo];
-					const posicionesXMetodo = posicionesX[metodo];
-					const posicionesYMetodo = posicionesY[metodo];
+			for (let i = 0; i < datosFisicos.numPasosMaximo; i++) {
+				metodos.forEach((metodo) => {
+					if (flags[metodo]) {
+						const posicion = posicionInicial[metodo];
+						const velocidad = velocidadInicial[metodo];
+						const velocidadesXMetodo = velocidadesX[metodo];
+						const velocidadesYMetodo = velocidadesY[metodo];
+						const posicionesXMetodo = posicionesX[metodo];
+						const posicionesYMetodo = posicionesY[metodo];
 
-					switch (metodo) {
-						case 'rungeKutta':
-							rungeKutta(posicion, velocidad, datosFisicos);
-							break;
-						case 'euler':
-							euler(posicion, velocidad, datosFisicos);
-							break;
-						case 'verlet':
-							verlet(posicion, velocidad, datosFisicos);
-							break;
+						switch (metodo) {
+							case 'rungeKutta':
+								rungeKutta(posicion, velocidad, datosFisicos);
+								break;
+							case 'euler':
+								euler(posicion, velocidad, datosFisicos);
+								break;
+							case 'verlet':
+								verlet(posicion, velocidad, datosFisicos);
+								break;
+						}
+
+						posicionesXMetodo.push(posicion.x);
+						posicionesYMetodo.push(posicion.y);
+						velocidadesXMetodo.push(velocidad.x);
+						velocidadesYMetodo.push(velocidad.y);
+
+						if (posicion.y <= 0 && posicion.x > 0) {
+							flags[metodo] = false;
+						}
 					}
+				});
 
-					posicionesXMetodo.push(posicion.x);
-					posicionesYMetodo.push(posicion.y);
-					velocidadesXMetodo.push(velocidad.x);
-					velocidadesYMetodo.push(velocidad.y);
+				segundos.push(i);
+				// Detener la simulación cuando todos los métodos lleguen al suelo
+				if (!Object.values(flags).some((flag) => flag)) break;
+			}
 
-					if (posicion.y <= 0 && posicion.x > 0) {
-						flags[metodo] = false;
-					}
-				}
-			});
+			const datos = {
+				segundos,
+				posicionesXRungeKutta: posicionesX.rungeKutta,
+				posicionesYRungeKutta: posicionesY.rungeKutta,
+				posicionesXEuler: posicionesX.euler,
+				posicionesYEuler: posicionesY.euler,
+				posicionesXVerlet: posicionesX.verlet,
+				posicionesYVerlet: posicionesY.verlet,
 
-			segundos.push(i);
-			// Detener la simulación cuando todos los métodos lleguen al suelo
-			if (!Object.values(flags).some((flag) => flag)) break;
-		}
-
-		const datos = {
-			segundos,
-			posicionesXRungeKutta: posicionesX.rungeKutta,
-			posicionesYRungeKutta: posicionesY.rungeKutta,
-			posicionesXEuler: posicionesX.euler,
-			posicionesYEuler: posicionesY.euler,
-			posicionesXVerlet: posicionesX.verlet,
-			posicionesYVerlet: posicionesY.verlet,
-
-			velocidadesXRungeKutta: velocidadesX.rungeKutta,
-			velocidadesYRungeKutta: velocidadesY.rungeKutta,
-			velocidadesXEuler: velocidadesX.euler,
-			velocidadesYEuler: velocidadesY.euler,
-			velocidadesXVerlet: velocidadesX.verlet,
-			velocidadesYVerlet: velocidadesY.verlet,
-		};
-
-		return datos;
+				velocidadesXRungeKutta: velocidadesX.rungeKutta,
+				velocidadesYRungeKutta: velocidadesY.rungeKutta,
+				velocidadesXEuler: velocidadesX.euler,
+				velocidadesYEuler: velocidadesY.euler,
+				velocidadesXVerlet: velocidadesX.verlet,
+				velocidadesYVerlet: velocidadesY.verlet,
+			};
+			console.log(datos);
+			resolve(datos);
+		});
 	}
 
 	//console.log(simularProyectil());
@@ -146,8 +148,9 @@ const TiroParabolicoSimulador = () => {
 	const handleDatosFisicosChange = (nuevosDatos) => {
 		setDatosFisicos(nuevosDatos);
 	};
-	const handleSimularClick = () => {
-		setDatos(simularProyectil());
+	const handleSimularClick = async () => {
+		const datos = await simularProyectil();
+		setDatos(datos);
 	};
 
 	return (

@@ -38,5 +38,6 @@ export default function calcularAceleracion(posicion, velocidad, datosFisicos) {
 			datosFisicos.masa,
 	};
 
+	//console.log(aceleracion);
 	return aceleracion;
 }

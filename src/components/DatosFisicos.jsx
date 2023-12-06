@@ -56,6 +56,8 @@ const DatosFisicos = ({ onChange }) => {
 
 	return (
 		<Segment style={{ fontSize: 'smaller' }}>
+			{/* Botón para guardar nuevos datos */}
+			<Button content='Guardar Cambios' positive onClick={handleInputChange} />
 			{/* Parámetros físicos iniciales*/}
 			{/*}
 			<Input
@@ -66,7 +68,7 @@ const DatosFisicos = ({ onChange }) => {
 				onChange={(e) =>
 					setPosicionInicial({
 						...posicionInicial,
-						x: parseFloat(e.target.value) || 0,
+						x: parseFloat(e.target.value) ,
 					})
 				}
 			>
@@ -83,12 +85,12 @@ const DatosFisicos = ({ onChange }) => {
 				onChange={(e) =>
 					setPosicionInicial({
 						...posicionInicial,
-						y: parseFloat(e.target.value) || 0,
+						y: parseFloat(e.target.value),
 					})
 				}
 			>
 				<Label basic>Posición Inicial (y):</Label>
-				<input />
+				<input min='0' />
 				<Label basic>m</Label>
 			</Input>
 			<Input
@@ -99,12 +101,12 @@ const DatosFisicos = ({ onChange }) => {
 				onChange={(e) =>
 					setVelocidadInicialMagnitud({
 						...velocidadInicialMagnitud,
-						x: parseFloat(e.target.value) || 0,
+						x: parseFloat(e.target.value),
 					})
 				}
 			>
 				<Label basic>Velocidad Inicial (x):</Label>
-				<input />
+				<input min={0.00001} />
 				<Label basic>m/s</Label>
 			</Input>
 			<Input
@@ -115,12 +117,12 @@ const DatosFisicos = ({ onChange }) => {
 				onChange={(e) =>
 					setVelocidadInicialMagnitud({
 						...velocidadInicialMagnitud,
-						y: parseFloat(e.target.value) || 0,
+						y: parseFloat(e.target.value),
 					})
 				}
 			>
 				<Label basic>Velocidad Inicial (y):</Label>
-				<input />
+				<input min='0.00001' />
 				<Label basic>m/s</Label>
 			</Input>
 			<Input
@@ -128,10 +130,10 @@ const DatosFisicos = ({ onChange }) => {
 				labelPosition='right'
 				type='number'
 				value={gradosInicial}
-				onChange={(e) => setGradosInicial(parseFloat(e.target.value) || 0)}
+				onChange={(e) => setGradosInicial(parseFloat(e.target.value))}
 			>
 				<Label basic>Ángulo de inicial:</Label>
-				<input />
+				<input min='1' max='89' />
 				<Label basic>grados</Label>
 			</Input>
 			<Input
@@ -139,10 +141,10 @@ const DatosFisicos = ({ onChange }) => {
 				labelPosition='right'
 				type='number'
 				value={masa}
-				onChange={(e) => setMasa(parseFloat(e.target.value) || 0)}
+				onChange={(e) => setMasa(parseFloat(e.target.value))}
 			>
 				<Label basic>Masa:</Label>
-				<input />
+				<input min='0.00001' max='1000' />
 				<Label basic>kg</Label>
 			</Input>
 			<Input
@@ -150,10 +152,10 @@ const DatosFisicos = ({ onChange }) => {
 				labelPosition='right'
 				type='number'
 				value={densidadDeAire}
-				onChange={(e) => setDensidadDeAire(parseFloat(e.target.value) || 0)}
+				onChange={(e) => setDensidadDeAire(parseFloat(e.target.value))}
 			>
 				<Label basic>Densidad del Aire:</Label>
-				<input />
+				<input min='0' />
 				<Label basic>kg/m³</Label>
 			</Input>
 			<Input
@@ -161,9 +163,7 @@ const DatosFisicos = ({ onChange }) => {
 				labelPosition='right'
 				type='number'
 				value={gravedad.y}
-				onChange={(e) =>
-					setGravedad({ x: 0, y: parseFloat(e.target.value) || 0 })
-				}
+				onChange={(e) => setGravedad({ x: 0, y: parseFloat(e.target.value) })}
 			>
 				<Label basic>Gravedad (y)</Label>
 				<input />
@@ -177,7 +177,7 @@ const DatosFisicos = ({ onChange }) => {
 				onChange={(e) =>
 					setFuerzaViento({
 						...fuerzaViento,
-						x: parseFloat(e.target.value) || 0,
+						x: parseFloat(e.target.value),
 					})
 				}
 			>
@@ -190,22 +190,20 @@ const DatosFisicos = ({ onChange }) => {
 				labelPosition='right'
 				type='number'
 				value={coeficienteArrastre}
-				onChange={(e) =>
-					setCoeficienteArrastre(parseFloat(e.target.value) || 0)
-				}
+				onChange={(e) => setCoeficienteArrastre(parseFloat(e.target.value))}
 			>
 				<Label basic>Coeficiente de Arrastre:</Label>
-				<input />
+				<input min='0.00001' max='1' />
 			</Input>
 			<Input
 				fluid
 				labelPosition='right'
 				type='number'
 				value={diametro}
-				onChange={(e) => setDiametro(parseFloat(e.target.value) || 0)}
+				onChange={(e) => setDiametro(parseFloat(e.target.value))}
 			>
 				<Label basic>Diámetro de la Esfera:</Label>
-				<input />
+				<input min='0.00001' />
 				<Label basic>m</Label>
 			</Input>
 			<Input
@@ -213,10 +211,10 @@ const DatosFisicos = ({ onChange }) => {
 				labelPosition='right'
 				type='number'
 				value={dt}
-				onChange={(e) => setDT(parseFloat(e.target.value) || 0)}
+				onChange={(e) => setDT(parseFloat(e.target.value))}
 			>
 				<Label basic>Paso de Tiempo:</Label>
-				<input />
+				<input min='0.0001' />
 				<Label basic>s</Label>
 			</Input>
 			<Input
@@ -224,13 +222,11 @@ const DatosFisicos = ({ onChange }) => {
 				labelPosition='right'
 				type='number'
 				value={numPasosMaximo}
-				onChange={(e) => setNumPasosMaximo(parseInt(e.target.value) || 0)}
+				onChange={(e) => setNumPasosMaximo(parseInt(e.target.value))}
 			>
 				<Label basic>Maximo de pasos:</Label>
-				<input />
+				<input min='1' />
 			</Input>
-			{/* Botón para guardar nuevos datos */}
-			<Button content='Guardar Cambios' positive onClick={handleInputChange} />
 		</Segment>
 	);
 };

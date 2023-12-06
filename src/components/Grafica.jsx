@@ -49,15 +49,15 @@ const Grafica = (props) => {
 	) {
 		return {
 			label,
-			data: posicionesY.map((valor) => valor.toFixed(2)),
+			data: posicionesY.map((valor) => valor.toFixed(4)),
 			borderColor,
 			backgroundColor,
 			borderWidth: 3,
 			pointRadius: 1,
-			dataPosicionX: posicionesX.map((valor) => valor.toFixed(2)),
-			dataPosicionY: posicionesY.map((valor) => valor.toFixed(2)),
-			dataVelocidadX: velocidadX.map((valor) => valor.toFixed(2)),
-			dataVelocidadY: velocidadY.map((valor) => valor.toFixed(2)),
+			dataPosicionX: posicionesX.map((valor) => valor.toFixed(4)),
+			dataPosicionY: posicionesY.map((valor) => valor.toFixed(4)),
+			dataVelocidadX: velocidadX.map((valor) => valor.toFixed(4)),
+			dataVelocidadY: velocidadY.map((valor) => valor.toFixed(4)),
 			tension: 0,
 		};
 	}
