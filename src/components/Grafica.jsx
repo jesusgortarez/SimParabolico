@@ -152,7 +152,7 @@ const Grafica = (props) => {
 		},
 	};
 
-	return <Line options={options} data={datos} />;
+	return <Line style={{ minHeight: '300px' }} options={options} data={datos} />;
 };
 
 export default Grafica;
