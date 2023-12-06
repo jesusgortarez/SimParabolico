@@ -29,6 +29,7 @@ const Estadisticos = (props) => {
 	return (
 		<>
 			<Button
+				style={{ fontSize: 'smaller' }}
 				content='Abrir Estadisticos'
 				disabled={state}
 				positive
@@ -40,10 +41,10 @@ const Estadisticos = (props) => {
 						left: '0%',
 						position: 'fixed',
 						top: '0%',
-						zIndex: 1000,
+						fontSize: '1vw',
 					}}
 				>
-					<Table celled>
+					<Table compact unstackable>
 						<Table.Header>
 							<Table.Row>
 								<Table.HeaderCell></Table.HeaderCell>

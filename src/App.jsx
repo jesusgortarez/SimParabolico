@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { useState, useEffect, useRef } from 'react';
-import { Button, Grid } from 'semantic-ui-react';
+import { Button, Grid, Segment } from 'semantic-ui-react';
 import rungeKutta from './utils/RungeKutta.js';
 import euler from './utils/Euler.js';
 import verlet from './utils/Verlet.js';
@@ -152,13 +152,24 @@ const TiroParabolicoSimulador = () => {
 
 	return (
 		<>
-			<Grid columns={2}>
+			<Segment attached='top'>
+				<Button
+					style={{ fontSize: 'smaller' }}
+					content='Simular'
+					positive
+					onClick={handleSimularClick}
+				/>
+				<Estadisticos estadisticos={datos} />
+			</Segment>
+			<Grid
+				columns={2}
+				stackable
+				textAlign='center'
+				style={{ fontSize: 'smaller' }}
+			>
 				<Grid.Column width={4}>
 					<DatosFisicos onChange={handleDatosFisicosChange} />
-					<Button content='Simular' positive onClick={handleSimularClick} />
-					<Estadisticos estadisticos={datos} />
 				</Grid.Column>
-
 				<Grid.Column width={12}>
 					<Grafica graficos={datos} />
 				</Grid.Column>

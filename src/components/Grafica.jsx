@@ -97,6 +97,7 @@ const Grafica = (props) => {
 	};
 	const options = {
 		responsive: true,
+		maintainAspectRatio: false,
 		scales: {
 			x: {
 				type: 'linear',

@@ -55,7 +55,7 @@ const DatosFisicos = ({ onChange }) => {
 	};
 
 	return (
-		<Segment>
+		<Segment style={{ fontSize: 'smaller' }}>
 			{/* Parámetros físicos iniciales*/}
 			{/*}
 			<Input
